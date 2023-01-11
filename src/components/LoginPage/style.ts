@@ -11,8 +11,13 @@ export const Layer = styled.div`
   display: flex;
 
   @media (max-width: 1200px) {
-    margin-top: 5%;
+    margin-top: 5vh;
     height: 95%;
+  }
+
+  @media (max-width: 600px) {
+    margin-top: 12vh;
+    height: 88%;
   }
 `;
 
@@ -180,13 +185,15 @@ export const LoginContainer = styled.div`
 
 export const LoginName = styled.h2`
   text-align: center;
-  font-size: 50px;
-  max-height: 150px;
-  white-space: nowrap;
+  font-size: ${({ width }: { width: number }) => {
+    return `${width}px`;
+  }};
+  max-height: 3.6em;
+  word-break: keep-all;
+  -webkit-line-clamp: 3;
 
   @media (max-width: 1200px) {
     color: #fff;
-    font-size: 45px;
   }
 
   span:nth-of-type(1) {
@@ -251,7 +258,7 @@ export const Email = styled.div`
   top: -50px;
   left: 60%;
   font-size: 27px;
-  z-index: 100;
+  z-index: -1;
 
   @media (max-width: 1200px) {
     color: #fff;

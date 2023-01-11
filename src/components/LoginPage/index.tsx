@@ -18,6 +18,7 @@ export default function LoginPage() {
   const [emailCheck, setEmailCheck] = useState<boolean>(false);
   const [pwCheck, setPwCheck] = useState<boolean>(false);
   const [error, setError] = useState<number>(200);
+  const [loginTitleWidth, setLoginTitleWidth] = useState<number>(50);
   const viewWidth = useRecoilValue(ViewWidth);
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement[]>([]);
@@ -25,6 +26,22 @@ export default function LoginPage() {
   const isQuery =
     router.query.client_id !== undefined &&
     router.query.redirect_uri !== undefined;
+
+  const makeTitleSize = () => {
+    setLoginTitleWidth(() => {
+      if (window.innerWidth > 550) return 45;
+      return (
+        (window.innerWidth * 4) /
+        5 /
+        ((serviceNameRef.current?.innerText.length ?? 16) - 1)
+      );
+    });
+  };
+
+  useEffect(() => {
+    makeTitleSize();
+    addEventListener('resize', () => makeTitleSize());
+  }, [serviceName, setServiceName]);
 
   useEffect(() => {
     if (!router.isReady) return;
@@ -97,7 +114,7 @@ export default function LoginPage() {
           {serviceName === '' ? (
             <h1>Login</h1>
           ) : (
-            <S.LoginName>
+            <S.LoginName width={loginTitleWidth}>
               <span>GAuth</span> 계정으로
               <br />
               <span ref={serviceNameRef}>{serviceName}에 로그인</span>
